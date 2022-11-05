@@ -2,8 +2,19 @@ let vuelos = require("./vuelos.json")
 
 
 const vuelosGet = () =>{
+    let vuelos_tem = vuelos.filter((el) =>{
 
-    return vuelos
+        let datevuelo = new Date(el.fecha)
+        let datehoy = Date.now()
+
+        console.log(datevuelo)
+        console.log(datehoy)
+        console.log(datevuelo >= datehoy)
+
+        return datevuelo >= datehoy
+    
+    })
+    return vuelos_tem
 
 }
 

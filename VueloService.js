@@ -23,6 +23,20 @@ const vuelosDelete = (id) =>{
     return vuelos
 }
 
+const vuelosgetid = (id) =>{
+
+    let vuelo = vuelos.find(
+
+        (elemento)=>{
+            return elemento.id === id
+        }
+
+    )
+
+    return vuelo
+}
+
 module.exports.vuelosgetExport = vuelosGet;
 module.exports.vuelosSetExport = vuelosSet;
 module.exports.vuelosDeleteExport = vuelosDelete;
+module.exports.vuelosgetidExport = vuelosgetid;

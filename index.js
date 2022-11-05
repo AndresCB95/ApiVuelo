@@ -11,7 +11,7 @@ const port = 8081
 app.use(cors())
 app.use(body_parse.json())
 
-const pathName="vuelos/"
+const pathName="/vuelos"
 
 
 app.get(pathName,
@@ -21,6 +21,17 @@ app.get(pathName,
         res.send(vuelosService.vuelosgetExport())
     }
 )
+
+
+app.get(pathName+"/id",
+
+        (req, res)=>{
+            console.log("Recibimos peticion")
+            let id = req.query.id
+            console.log(id)
+            res.send(vuelosService.vuelosgetidExport(id))
+        }
+    )
 
 
 app.post(pathName,

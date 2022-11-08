@@ -69,6 +69,16 @@ app.patch(pathName,
     }
 )
 
+app.patch(pathName+"/sillas",
+
+    (req, res)=>{
+        console.log("reserva sillas")
+        console.log(req.body)
+        id = req.query.id
+        res.send(vuelosService.sillasReservadasExport(req.body,id))
+    }   
+)
+
 
 app.listen(port, 
     ()=>{

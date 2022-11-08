@@ -36,7 +36,28 @@ const vuelosgetid = (id) =>{
     return vuelo
 }
 
+
+const sillasReservadas = (sillas, idvuelo)=>{
+
+    for (let i = 0; i< vuelos.length; i++){
+        if(idvuelo === vuelos[i].id){
+            for (let ivuelo = 0; ivuelo< vuelos[i].silla.length; ivuelo++){
+                for (let j = 0; j < sillas.length; j++){
+                    if(vuelos[i].silla[ivuelo].categoria === sillas[j].categoria){
+                        vuelos[i].silla[ivuelo].silla -= sillas[j].silla
+                    }
+                }
+            }
+            i=vuelos.length
+        }
+    }
+
+    return "Sillas reservada"
+
+}
+
 module.exports.vuelosgetExport = vuelosGet;
 module.exports.vuelosSetExport = vuelosSet;
 module.exports.vuelosDeleteExport = vuelosDelete;
 module.exports.vuelosgetidExport = vuelosgetid;
+module.exports.sillasReservadasExport = sillasReservadas;

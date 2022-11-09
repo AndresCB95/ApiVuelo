@@ -1,16 +1,18 @@
-let vuelos = require("./vuelos.json")
+const getMongo = require("./mongodb.js")
 
 
-const vuelosGet = () =>{
-
+const vuelosGet = async () =>{
+    const { collection, client } = await getConexiones()
+    const vuelos =await collection.find({}).toArray()
+    await getMongo.closeClientExport(client)
     return vuelos
-
 }
 
-const vuelosSet = (vuelo) =>{
-    vuelos.push(vuelo)
-    return vuelos
-
+const vuelosSet = async (vuelo) =>{
+    const { collection, client } = await getConexiones()
+    await collection.insertMany(vuelo)
+    await getMongo.closeClientExport(client)
+    return await vuelosGet()
 }
 
 const vuelosDelete = (id) =>{
@@ -23,17 +25,16 @@ const vuelosDelete = (id) =>{
     return vuelos
 }
 
-const vuelosgetid = (id) =>{
-
-    let vuelo = vuelos.find(
-
-        (elemento)=>{
-            return elemento.id === id
+const vuelosgetid = async (id) =>{
+    var vueloEncontrado = null
+    const { collection, client } = await getConexiones()
+    await collection.findOne({"_id":id}).then(
+        (respuesta) =>{
+            vueloEncontrado = respuesta
         }
-
     )
-
-    return vuelo
+    await getMongo.closeClientExport(client)
+    return vueloEncontrado
 }
 
 
@@ -61,3 +62,10 @@ module.exports.vuelosSetExport = vuelosSet;
 module.exports.vuelosDeleteExport = vuelosDelete;
 module.exports.vuelosgetidExport = vuelosgetid;
 module.exports.sillasReservadasExport = sillasReservadas;
+
+async function getConexiones() {
+    const nameDb = "aerolineaG1y2"
+    const client = await getMongo.getClientnExport(nameDb)
+    const collection = await getMongo.getCollectionExport(client, nameDb)
+    return { collection, client }
+}

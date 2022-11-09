@@ -15,30 +15,29 @@ const pathName="/vuelos"
 
 
 app.get(pathName,
-    (req, res)=>{
+    async (req, res)=>{
         console.log("Recibimos peticion")
-        console.log(req)
-        res.send(vuelosService.vuelosgetExport())
+        res.send(await vuelosService.vuelosgetExport())
     }
 )
 
 
 app.get(pathName+"/id",
 
-        (req, res)=>{
+       async (req, res)=>{
             console.log("Recibimos peticion")
             let id = req.query.id
             console.log(id)
-            res.send(vuelosService.vuelosgetidExport(id))
+            res.send(await vuelosService.vuelosgetidExport(id))
         }
     )
 
 
 app.post(pathName,
-    (req, res)=>{
+    async (req, res)=>{
         console.log("Recibimos peticion")
         console.log(req.body)
-        let vuelos = vuelosService.vuelosSetExport(req.body)
+        let vuelos = await vuelosService.vuelosSetExport(req.body)
         res.send({"mensaje":"Vuelo Guardado","vuelos":vuelos})
     }
 )

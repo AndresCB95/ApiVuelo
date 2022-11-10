@@ -17,7 +17,8 @@ const pathName="/vuelos"
 app.get(pathName,
     async (req, res)=>{
         console.log("Recibimos peticion")
-        res.send(await vuelosService.vuelosgetExport())
+        const id = req.query.id
+        res.send(await vuelosService.vuelosgetExport(id))
     }
 )
 
@@ -70,11 +71,11 @@ app.patch(pathName,
 
 app.patch(pathName+"/sillas",
 
-    (req, res)=>{
+    async (req, res)=>{
         console.log("reserva sillas")
         console.log(req.body)
         id = req.query.id
-        res.send(vuelosService.sillasReservadasExport(req.body,id))
+        res.send(await vuelosService.sillasReservadasExport(req.body,id))
     }   
 )
 

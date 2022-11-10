@@ -38,9 +38,9 @@ const vuelosgetid = async (id) =>{
 }
 
 
-const sillasReservadas = (sillas, idvuelo)=>{
-
-    for (let i = 0; i< vuelos.length; i++){
+const sillasReservadas = async (sillas, idvuelo)=>{
+    const { collection, client } = await getConexiones()
+    /*for (let i = 0; i< vuelos.length; i++){
         if(idvuelo === vuelos[i].id){
             for (let ivuelo = 0; ivuelo< vuelos[i].silla.length; ivuelo++){
                 for (let j = 0; j < sillas.length; j++){
@@ -51,8 +51,28 @@ const sillasReservadas = (sillas, idvuelo)=>{
             }
             i=vuelos.length
         }
+    }*/
+    var vuelo = null
+
+    await collection.findOne({"_id":idvuelo}).then(
+        (vueloresp)=>{
+            vuelo = vueloresp
+        }
+    )
+    for (let isilla = 0; isilla< vuelo.silla.length; isilla++){
+        for (let j = 0; j < sillas.length; j++){
+            if(vuelo.silla[isilla].categoria === sillas[j].categoria){
+                if(sillas[j].cancelada){
+                    vuelo.silla[isilla].silla += sillas[j].silla
+                }else{
+                    vuelo.silla[isilla].silla -= sillas[j].silla
+                }
+            }
+        }
     }
 
+    await collection.updateOne({"_id":idvuelo},{"$set":{"silla":vuelo.silla}})
+    await getMongo.closeClientExport(client)
     return "Sillas reservada"
 
 }

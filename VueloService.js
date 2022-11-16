@@ -65,7 +65,14 @@ const sillasReservadas = async (sillas, idvuelo)=>{
                 if(sillas[j].cancelada){
                     vuelo.silla[isilla].silla += sillas[j].silla
                 }else{
-                    vuelo.silla[isilla].silla -= sillas[j].silla
+                    console.log(vuelo.silla[isilla].silla - sillas[j].silla)
+                    if(vuelo.silla[isilla].silla - sillas[j].silla < 0){
+                        console.log("Entro al error=?")
+                        await getMongo.closeClientExport(client)
+                        throw new Error("Sillas no disponibles")
+                    }else{
+                        vuelo.silla[isilla].silla -= sillas[j].silla
+                    }
                 }
             }
         }

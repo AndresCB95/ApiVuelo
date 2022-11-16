@@ -72,10 +72,16 @@ app.patch(pathName,
 app.patch(pathName+"/sillas",
 
     async (req, res)=>{
-        console.log("reserva sillas")
-        console.log(req.body)
-        id = req.query.id
-        res.send(await vuelosService.sillasReservadasExport(req.body,id))
+        try {
+            console.log("reserva sillas")
+            console.log(req.body)
+            id = req.query.id
+            res.send(await vuelosService.sillasReservadasExport(req.body,id))
+        } catch (error) {
+            res.status(500)
+            res.send("Error al reservar la silla")
+        }
+        
     }   
 )
 

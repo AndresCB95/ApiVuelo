@@ -1,0 +1,22 @@
+services:
+  apicliente:
+    image: apicliente:latest
+    ports:
+      - 8082:8082
+  apivuelo:
+    image: apivuelo:latest
+    ports:
+      - 8081:8081
+  apireserva:
+    image: apireserva:latest
+    ports:
+      - 8084:8084
+  apipago:
+    image: apipago:latest
+    ports:
+      - 8083:8083
+  reactg1y2:
+    image: reactg1y2:latest
+    ports:
+      - 8080:3000
+  
